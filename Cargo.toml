@@ -1,0 +1,14 @@
+[package]
+name = "cyclone-physics-rs"
+version = "0.1.0"
+authors = ["Rutvik <heyrutvik@gmail.com>"]
+edition = "2018"
+
+[lib]
+name = "cyclone"
+path = "src/cyclone/lib.rs"
+
+[dependencies]
+kiss3d = "0.21"
+nalgebra = "0.18"
+rand = "0.3"
