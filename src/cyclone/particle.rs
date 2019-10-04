@@ -1,6 +1,7 @@
 use crate::core::Vector3;
 use crate::precision::{Real, REAL_MAX};
 
+#[derive(Debug)]
 pub struct Particle {
     position: Vector3,
     velocity: Vector3,
@@ -28,14 +29,10 @@ impl Particle {
         self.inverse_mass = 1.0 / mass;
     }
     pub fn set_velocity(&mut self, x: Real, y: Real, z: Real) {
-        self.velocity.x = x;
-        self.velocity.y = y;
-        self.velocity.z = z;
+        self.velocity.set_coordinates(x, y, z);
     }
     pub fn set_acceleration(&mut self, x: Real, y: Real, z: Real) {
-        self.acceleration.x = x;
-        self.acceleration.y = y;
-        self.acceleration.z = z;
+        self.acceleration.set_coordinates(x, y, z);
     }
     pub fn get_mass(&self) -> Real {
         if self.inverse_mass == 0.0 {

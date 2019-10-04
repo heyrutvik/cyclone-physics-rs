@@ -13,16 +13,6 @@ pub struct Timing {
 }
 
 impl Timing {
-    pub fn new() -> Timing {
-        Timing {
-            frame_number: 0,
-            last_frame_timestamp: Timing::get_time(),
-            last_frame_duration: 0,
-            is_paused: false,
-            average_frame_duration: 0.0,
-            fps: 0.0
-        }
-    }
     pub fn update(&mut self) {
         if !self.is_paused {
             self.frame_number += 1;
@@ -46,5 +36,18 @@ impl Timing {
     fn get_time() -> u64 {
         SystemTime::now().duration_since(UNIX_EPOCH)
             .expect("Time went backwards").as_millis() as u64
+    }
+}
+
+impl Default for Timing {
+    fn default() -> Timing {
+        Timing {
+            frame_number: 0,
+            last_frame_timestamp: Timing::get_time(),
+            last_frame_duration: 0,
+            is_paused: false,
+            average_frame_duration: 0.0,
+            fps: 0.0
+        }
     }
 }
