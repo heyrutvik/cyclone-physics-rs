@@ -9,7 +9,7 @@ pub struct Timing {
     last_frame_duration: u64,
     is_paused: bool,
     average_frame_duration: f64,
-    fps: f64
+    fps: f64,
 }
 
 impl Timing {
@@ -34,8 +34,10 @@ impl Timing {
         self.last_frame_duration as Real * 0.001
     }
     fn get_time() -> u64 {
-        SystemTime::now().duration_since(UNIX_EPOCH)
-            .expect("Time went backwards").as_millis() as u64
+        SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .expect("Time went backwards")
+            .as_millis() as u64
     }
 }
 
@@ -47,7 +49,7 @@ impl Default for Timing {
             last_frame_duration: 0,
             is_paused: false,
             average_frame_duration: 0.0,
-            fps: 0.0
+            fps: 0.0,
         }
     }
 }

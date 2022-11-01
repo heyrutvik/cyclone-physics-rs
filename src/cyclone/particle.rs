@@ -9,7 +9,7 @@ pub struct Particle {
     force_accumulated: Vector3,
 
     damping: Real,
-    inverse_mass: Real
+    inverse_mass: Real,
 }
 
 impl Particle {
@@ -20,7 +20,7 @@ impl Particle {
             acceleration: Vector3::origin(),
             force_accumulated: Vector3::origin(),
             damping: 1.0,
-            inverse_mass: 1.0
+            inverse_mass: 1.0,
         }
     }
 
@@ -51,15 +51,19 @@ impl Particle {
         self.force_accumulated.clear();
     }
     pub fn integrate(&mut self, duration: Real) {
-        if self.inverse_mass <= 0.0 { return () }
+        if self.inverse_mass <= 0.0 {
+            return;
+        }
         if duration > 0.0 {
             self.position.add_scaled_vector(&self.velocity, duration);
             let resulting_acc = &mut self.acceleration;
             resulting_acc.add_scaled_vector(&self.force_accumulated, self.inverse_mass);
-            self.velocity.add_scaled_vector(&resulting_acc, duration);
+            self.velocity.add_scaled_vector(resulting_acc, duration);
             self.velocity *= self.damping.powf(duration);
             self.clear_accumulator();
         }
     }
-    pub fn get_position(&self) -> &Vector3 { &self.position }
+    pub fn get_position(&self) -> &Vector3 {
+        &self.position
+    }
 }

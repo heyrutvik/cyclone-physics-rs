@@ -6,12 +6,12 @@ use crate::precision::Real;
 pub struct Vector3 {
     x: Real,
     y: Real,
-    z: Real
+    z: Real,
 }
 
 impl Vector3 {
     pub fn new(x: Real, y: Real, z: Real) -> Vector3 {
-        Vector3 {x, y, z}
+        Vector3 { x, y, z }
     }
     pub fn origin() -> Vector3 {
         Vector3::new(0.0, 0.0, 0.0)
@@ -20,19 +20,25 @@ impl Vector3 {
         (self.x, self.y, self.z)
     }
     pub fn set_coordinates(&mut self, x: Real, y: Real, z: Real) {
-        self.x = x; self.y = y; self.z = z;
+        self.x = x;
+        self.y = y;
+        self.z = z;
     }
     pub fn clear(&mut self) {
-        self.x = 0.0; self.y = 0.0; self.z = 0.0;
+        self.x = 0.0;
+        self.y = 0.0;
+        self.z = 0.0;
     }
     pub fn invert(&mut self) {
-        self.x = -self.x; self.y = -self.y; self.z = -self.z;
+        self.x = -self.x;
+        self.y = -self.y;
+        self.z = -self.z;
     }
     pub fn magnitude(&self) -> Real {
-        (self.x*self.x + self.y*self.y + self.z*self.z).sqrt()
+        (self.x * self.x + self.y * self.y + self.z * self.z).sqrt()
     }
     pub fn square_magnitude(&self) -> Real {
-        self.x*self.x + self.y*self.y + self.z*self.z
+        self.x * self.x + self.y * self.y + self.z * self.z
     }
     pub fn normalize(&mut self) {
         let l: Real = self.magnitude();
@@ -104,7 +110,7 @@ impl Mul<Real> for Vector3 {
 impl Mul<&Vector3> for Vector3 {
     type Output = Real;
     fn mul(self, rhs: &Vector3) -> Self::Output {
-        self.x*rhs.x + self.y*rhs.y + self.z+rhs.z
+        self.x * rhs.x + self.y * rhs.y + self.z + rhs.z
     }
 }
 
@@ -121,19 +127,22 @@ impl Rem<&Vector3> for &Vector3 {
     type Output = Vector3;
     fn rem(self, rhs: &Vector3) -> Self::Output {
         Vector3::new(
-            self.y*rhs.z - self.z*rhs.y,
-            self.z*rhs.x - self.x*rhs.z,
-            self.x*rhs.y - self.y*rhs.x)
+            self.y * rhs.z - self.z * rhs.y,
+            self.z * rhs.x - self.x * rhs.z,
+            self.x * rhs.y - self.y * rhs.x,
+        )
     }
 }
 
 // vector product %=
 impl RemAssign<&Vector3> for Vector3 {
     fn rem_assign(&mut self, rhs: &Vector3) {
-        let x = self.y*rhs.z - self.z*rhs.y;
-        let y = self.z*rhs.x - self.x*rhs.z;
-        let z = self.x*rhs.y - self.y*rhs.x;
-        self.x = x; self.y = y; self.z = z;
+        let x = self.y * rhs.z - self.z * rhs.y;
+        let y = self.z * rhs.x - self.x * rhs.z;
+        let z = self.x * rhs.y - self.y * rhs.x;
+        self.x = x;
+        self.y = y;
+        self.z = z;
     }
 }
 
@@ -155,7 +164,7 @@ mod tests {
 
     #[test]
     fn test_magnitue() {
-        let v1 = Vector3::new(3.0,4.0,2.0);
+        let v1 = Vector3::new(3.0, 4.0, 2.0);
         let sm1: Real = 29.0;
         assert_eq!(v1.square_magnitude(), sm1);
         assert_eq!(v1.magnitude(), sm1.sqrt());
@@ -163,7 +172,7 @@ mod tests {
 
     #[test]
     fn test_normalize() {
-        let mut v1 = Vector3::new(3.0,4.0,2.0);
+        let mut v1 = Vector3::new(3.0, 4.0, 2.0);
         let sm1: Real = 29.0;
         let m1: Real = sm1.sqrt();
         let d1: Real = 1.0 / m1;
